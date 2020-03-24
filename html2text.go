@@ -293,7 +293,7 @@ func getAttrValExist(node *html.Node, attrName string) (string, bool) {
 	return "", false
 }
 
-// FromHTMLNode renders text output from a pre-parsed HTML document.
+// FromHtmlNode renders text output from a pre-parsed HTML document.
 func FromHtmlNode(doc *html.Node) (string, error) {
 	return fromHtmlNodeBase(doc, nil)
 }

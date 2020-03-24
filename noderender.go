@@ -38,11 +38,11 @@ func LoopChildren(node *html.Node, d DefaultRenderer) error {
 	return nil
 }
 
-// Base on 'node' and convert to plain text by writing to 'd'. 'd' can also be
-// used to handle html node using the default method. Return non-nil 'err' if
-// any error. Return non-nil 'next' if there is any child node that need to be
-// handled by default renderer else return nil 'next' to indicate done for this
-// 'node'.
+// NodeRenderer take html 'node' and convert to plain text by writing to 'd'.
+// 'd' can also be used to handle html node using the default method. Return
+// non-nil 'err' if any error. Return non-nil 'next' if there is any child node
+// that need to be handled by default renderer else return nil 'next' to
+// indicate done for this 'node'.
 type NodeRenderer interface {
 	NodeRender(node *html.Node, d DefaultRendererWriter) (next *html.Node, err error)
 }
