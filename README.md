@@ -1,7 +1,7 @@
 # html2text. Forked.
 
 [![Documentation](https://godoc.org/github.com/cention-sany/html2text?status.svg)](https://godoc.org/github.com/cention-sany/html2text)
-[![Build Status](https://travis-ci.org/cention-sany/html2text.svg?branch=master)](https://travis-ci.org/cention-sany/html2text)
+[![Build Status](https://travis-ci.org/cention-sany/html2text.svg?branch=cention-v1)](https://travis-ci.org/cention-sany/html2text)
 [![Report Card](https://goreportcard.com/badge/github.com/cention-sany/html2text)](https://goreportcard.com/report/github.com/cention-sany/html2text)
 ___
 # html2text
