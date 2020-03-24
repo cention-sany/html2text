@@ -32,6 +32,7 @@ func (ctx *textifyTraverseCtx) traverse(node *html.Node) error {
 	return ctx.DefaultRender(node)
 }
 
+// Implements DefaultRenderer.
 func (ctx *textifyTraverseCtx) DefaultRender(node *html.Node) error {
 	if ctx.customRender != nil {
 		next, err := ctx.customRender.NodeRender(node, ctx)
@@ -292,14 +293,18 @@ func getAttrValExist(node *html.Node, attrName string) (string, bool) {
 	return "", false
 }
 
+// FromHTMLNode renders text output from a pre-parsed HTML document.
 func FromHtmlNode(doc *html.Node) (string, error) {
 	return fromHtmlNodeBase(doc, nil)
 }
 
+// FromReader renders text output after parsing HTML for the specified
+// io.Reader.
 func FromReader(reader io.Reader) (string, error) {
 	return FromReaderWithRenderer(reader, nil)
 }
 
+// FromString parses HTML from the input string, then renders the text form.
 func FromString(input string) (string, error) {
 	return FromStringWithRenderer(input, nil)
 }

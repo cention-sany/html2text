@@ -10,6 +10,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// FromStringWithRenderer like FromString but with optional 'n' for custom node.
 func FromStringWithRenderer(input string, n NodeRenderer) (string, error) {
 	text, err := FromReaderWithRenderer(strings.NewReader(input), n)
 	if err != nil {
@@ -18,6 +19,7 @@ func FromStringWithRenderer(input string, n NodeRenderer) (string, error) {
 	return text, nil
 }
 
+// FromReaderWithRenderer like FromReader but with optional 'n' for custom node.
 func FromReaderWithRenderer(reader io.Reader, n NodeRenderer) (string, error) {
 	doc, err := html.Parse(reader)
 	if err != nil {
@@ -26,6 +28,7 @@ func FromReaderWithRenderer(reader io.Reader, n NodeRenderer) (string, error) {
 	return fromHtmlNodeBase(doc, n)
 }
 
+// LoopChildren is helper for custom node that need default render engine.
 func LoopChildren(node *html.Node, d DefaultRenderer) error {
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
 		if err := d.DefaultRender(c); err != nil {
@@ -44,11 +47,13 @@ type NodeRenderer interface {
 	NodeRender(node *html.Node, d DefaultRendererWriter) (next *html.Node, err error)
 }
 
+// DefaultRendererWriter implements both DefaultRenderer and io.Writer.
 type DefaultRendererWriter interface {
 	DefaultRenderer
 	io.Writer
 }
 
+// DefaultRenderer pass to custom node to trigger default render engine.
 type DefaultRenderer interface {
 	DefaultRender(node *html.Node) error
 }
