@@ -41,12 +41,12 @@ func LoopChildren(node *html.Node, d DefaultRenderer) error {
 // handled by default renderer else return nil 'next' to indicate done for this
 // 'node'.
 type NodeRenderer interface {
-	NodeRender(node *html.Node, d DefaultRendererStringWriter) (next *html.Node, err error)
+	NodeRender(node *html.Node, d DefaultRendererWriter) (next *html.Node, err error)
 }
 
-type DefaultRendererStringWriter interface {
+type DefaultRendererWriter interface {
 	DefaultRenderer
-	io.StringWriter
+	io.Writer
 }
 
 type DefaultRenderer interface {

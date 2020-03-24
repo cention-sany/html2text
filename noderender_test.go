@@ -58,7 +58,7 @@ func (errorer) DefaultRender(_ *html.Node) error {
 	return errTest
 }
 
-func (errorer) NodeRender(_ *html.Node, _ DefaultRendererStringWriter) (*html.Node, error) {
+func (errorer) NodeRender(_ *html.Node, _ DefaultRendererWriter) (*html.Node, error) {
 	return nil, errTest
 }
 
@@ -111,7 +111,7 @@ func TestCustomRenderer(t *testing.T) {
 
 type altSpanText struct{}
 
-func (altSpanText) NodeRender(node *html.Node, d DefaultRendererStringWriter) (*html.Node, error) {
+func (altSpanText) NodeRender(node *html.Node, d DefaultRendererWriter) (*html.Node, error) {
 	if node.Type != html.ElementNode {
 		return node, nil
 	} else if node.DataAtom != atom.Span {
@@ -121,7 +121,7 @@ func (altSpanText) NodeRender(node *html.Node, d DefaultRendererStringWriter) (*
 	if !exist {
 		return node, nil
 	}
-	_, err := d.WriteString(getAttrVal(node, "alt"))
+	_, err := d.Write([]byte(getAttrVal(node, "alt")))
 	if err != nil {
 		return nil, err
 	}

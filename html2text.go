@@ -192,11 +192,11 @@ func (ctx *textifyTraverseCtx) traverseChildren(node *html.Node) error {
 	return LoopChildren(node, ctx)
 }
 
-func (ctx *textifyTraverseCtx) WriteString(s string) (int, error) {
-	if err := ctx.emit(s); err != nil {
+func (ctx *textifyTraverseCtx) Write(b []byte) (int, error) {
+	if err := ctx.emit(string(b)); err != nil {
 		return 0, err
 	}
-	return len(s), nil
+	return len(b), nil
 }
 
 func (ctx *textifyTraverseCtx) emit(data string) error {
