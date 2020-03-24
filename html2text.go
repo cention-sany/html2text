@@ -19,6 +19,7 @@ var (
 type textifyTraverseCtx struct {
 	Buf bytes.Buffer
 
+	customRender    NodeRenderer
 	prefix          string
 	blockquoteLevel int
 	lineLength      int
@@ -28,6 +29,19 @@ type textifyTraverseCtx struct {
 }
 
 func (ctx *textifyTraverseCtx) traverse(node *html.Node) error {
+	return ctx.DefaultRender(node)
+}
+
+func (ctx *textifyTraverseCtx) DefaultRender(node *html.Node) error {
+	if ctx.customRender != nil {
+		next, err := ctx.customRender.NodeRender(node, ctx)
+		if err != nil {
+			return err
+		} else if next == nil {
+			return nil
+		}
+		node = next
+	}
 	switch node.Type {
 
 	default:
@@ -175,13 +189,14 @@ func (ctx *textifyTraverseCtx) traverse(node *html.Node) error {
 }
 
 func (ctx *textifyTraverseCtx) traverseChildren(node *html.Node) error {
-	for c := node.FirstChild; c != nil; c = c.NextSibling {
-		if err := ctx.traverse(c); err != nil {
-			return err
-		}
-	}
+	return LoopChildren(node, ctx)
+}
 
-	return nil
+func (ctx *textifyTraverseCtx) WriteString(s string) (int, error) {
+	if err := ctx.emit(s); err != nil {
+		return 0, err
+	}
+	return len(s), nil
 }
 
 func (ctx *textifyTraverseCtx) emit(data string) error {
@@ -264,18 +279,35 @@ func (ctx *textifyTraverseCtx) normalizeHrefLink(link string) string {
 }
 
 func getAttrVal(node *html.Node, attrName string) string {
+	v, _ := getAttrValExist(node, attrName)
+	return v
+}
+
+func getAttrValExist(node *html.Node, attrName string) (string, bool) {
 	for _, attr := range node.Attr {
 		if attr.Key == attrName {
-			return attr.Val
+			return attr.Val, true
 		}
 	}
-
-	return ""
+	return "", false
 }
 
 func FromHtmlNode(doc *html.Node) (string, error) {
+	return fromHtmlNodeBase(doc, nil)
+}
+
+func FromReader(reader io.Reader) (string, error) {
+	return FromReaderWithRenderer(reader, nil)
+}
+
+func FromString(input string) (string, error) {
+	return FromStringWithRenderer(input, nil)
+}
+
+func fromHtmlNodeBase(doc *html.Node, n NodeRenderer) (string, error) {
 	ctx := textifyTraverseCtx{
-		Buf: bytes.Buffer{},
+		Buf:          bytes.Buffer{},
+		customRender: n,
 	}
 	if err := ctx.traverse(doc); err != nil {
 		return "", err
@@ -285,20 +317,4 @@ func FromHtmlNode(doc *html.Node) (string, error) {
 		strings.Replace(ctx.Buf.String(), "\n ", "\n", -1), "\n\n"))
 	return text, nil
 
-}
-
-func FromReader(reader io.Reader) (string, error) {
-	doc, err := html.Parse(reader)
-	if err != nil {
-		return "", err
-	}
-	return FromHtmlNode(doc)
-}
-
-func FromString(input string) (string, error) {
-	text, err := FromReader(strings.NewReader(input))
-	if err != nil {
-		return "", err
-	}
-	return text, nil
 }

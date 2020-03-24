@@ -565,7 +565,11 @@ func assertString(t *testing.T, input string, output string) {
 }
 
 func assertPlaintext(t *testing.T, input string, matcher StringMatcher) {
-	text, err := FromString(input)
+	assertPlaintextWithRenderer(t, input, matcher, nil)
+}
+
+func assertPlaintextWithRenderer(t *testing.T, input string, matcher StringMatcher, n NodeRenderer) {
+	text, err := FromStringWithRenderer(input, n)
 	if err != nil {
 		t.Error(err)
 	}
