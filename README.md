@@ -1,3 +1,9 @@
+# html2text. Forked.
+
+[![Documentation](https://godoc.org/github.com/cention-sany/html2text?status.svg)](https://godoc.org/github.com/cention-sany/html2text)
+[![Build Status](https://travis-ci.org/cention-sany/html2text.svg?branch=master)](https://travis-ci.org/cention-sany/html2text)
+[![Report Card](https://goreportcard.com/badge/github.com/cention-sany/html2text)](https://goreportcard.com/report/github.com/cention-sany/html2text)
+___
 # html2text
 
 [![Documentation](https://godoc.org/github.com/jaytaylor/html2text?status.svg)](https://godoc.org/github.com/jaytaylor/html2text)
@@ -45,17 +51,17 @@ func main() {
               <link rel=\"stylesheet\" href=\"main.css\">
               <style type=\"text/css\">body { color: #fff; }</style>
             </head>
-        
+
             <body>
               <div class="logo">
                 <a href="http://mymegaservice.com/"><img src="/logo-image.jpg" alt="Mega Service"/></a>
               </div>
-        
+
               <h1>Welcome to your new account on my service!</h1>
-        
+
               <p>
                   Here is some more information:
-        
+
                   <ul>
                       <li>Link 1: <a href="https://example.com">Example.com</a></li>
                       <li>Link 2: <a href="https://example2.com">Example2.com</a></li>
@@ -113,4 +119,3 @@ If you appreciate this library please feel free to drop me a line and tell me!  
 Email: jay at (my github username).com
 
 Twitter: [@jtaylor](https://twitter.com/jtaylor)
-
