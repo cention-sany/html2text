@@ -12,11 +12,7 @@ import (
 
 // FromStringWithRenderer like FromString but with optional 'n' for custom node.
 func FromStringWithRenderer(input string, n NodeRenderer) (string, error) {
-	text, err := FromReaderWithRenderer(strings.NewReader(input), n)
-	if err != nil {
-		return "", err
-	}
-	return text, nil
+	return FromReaderWithRenderer(strings.NewReader(input), n)
 }
 
 // FromReaderWithRenderer like FromReader but with optional 'n' for custom node.

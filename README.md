@@ -3,6 +3,8 @@
 [![Documentation](https://godoc.org/github.com/cention-sany/html2text?status.svg)](https://godoc.org/github.com/cention-sany/html2text)
 [![Build Status](https://travis-ci.org/cention-sany/html2text.svg?branch=cention-v1)](https://travis-ci.org/cention-sany/html2text)
 [![Report Card](https://goreportcard.com/badge/github.com/cention-sany/html2text)](https://goreportcard.com/report/github.com/cention-sany/html2text)
+[![Exago](https://api.exago.io:443/badge/cov/github.com/cention-sany/html2text)](https://exago.io/project/github.com/cention-sany/html2text)
+[![Exago](https://api.exago.io:443/badge/rank/github.com/cention-sany/html2text)](https://exago.io/project/github.com/cention-sany/html2text)
 ___
 # html2text
 
